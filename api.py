@@ -57,9 +57,9 @@ class ViolationsAPI(Resource):
             abort(404, message="Resturant {}, Violation {}, doesn't exist".format(restaurant_id, violation_id))    
         return restaurants[restaurant_id]["violations"][violation_id]
 
-api.add_resource(AllRestaurantsAPI, 'api/v1.0/restaurants')
-api.add_resource(RestaurantsAPI, 'api/v1.0/restaurants/<restaurant_id>')
-api.add_resource(ViolationsAPI, 'api/v1.0/restaurants/<restaurant_id>/violations/<violation_id>')
+api.add_resource(AllRestaurantsAPI, '/api/v1.0/restaurants')
+api.add_resource(RestaurantsAPI, '/api/v1.0/restaurants/<restaurant_id>')
+api.add_resource(ViolationsAPI, '/api/v1.0/restaurants/<restaurant_id>/violations/<violation_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
