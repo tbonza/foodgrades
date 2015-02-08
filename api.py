@@ -36,6 +36,13 @@ with open('violations.txt') as file:
         violation_id += 1 
 file.close()
 
+class Restaurants(Resource):
+
+    def get(self):
+        if not restaurants:
+            abort(404, message="No Restaurants")
+        return restaurants
+
 class Restaurant(Resource):
 
     def get(self, restaurant_id):
@@ -50,6 +57,7 @@ class Violation(Resource):
             abort(404, message="Resturant {}, Violation {}, doesn't exist".format(restaurant_id, violation_id))    
         return restaurants[restaurant_id]["violations"][violation_id]
 
+api.add_resource(Restaurants, '/restaurants')
 api.add_resource(Restaurant, '/restaurants/<restaurant_id>')
 api.add_resource(Violation, '/restaurants/<restaurant_id>/violations/<violation_id>')
 
