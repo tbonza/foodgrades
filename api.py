@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask.ext.restful import reqparse, abort, Api, Resource
 
@@ -28,5 +30,7 @@ class Restaurant(Resource):
 
 api.add_resource(Restaurant, '/restaurants/<restaurant_id>')
 
+port = os.getenv('VCAP_APP_PORT', '5000')
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(port))
+#    app.run(debug=True)
