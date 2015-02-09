@@ -10,9 +10,9 @@ id_field = 1 # id is in 2nd column of restaurant data
 restaurants = {} # dict of restaurants ("id" -> dict of restaurant data)
 
 with open('grades.txt') as file:
-    fields = file.readline().rstrip('\n\r').split('\t') # strings of restaurant data fields 
+    fields = file.readline().rstrip('\n').rstrip('\r').split('\t') # strings of restaurant data fields 
     for line in file:
-        restaurant = line.split('\t') # list of restaurant values
+        restaurant = line.rstrip('\n').rstrip('\r').split('\t') # list of restaurant values
         restaurants[restaurant[id_field]] = {}
         for i, field in enumerate(fields):
             restaurants[restaurant[id_field]][field] = restaurant[i]
@@ -23,9 +23,9 @@ file.close()
 id_field = 0 # id is in the 1st column of the violations data
 
 with open('violations.txt') as file:
-    fields = file.readline().rstrip('\n\r').split('\t') # strings of violation data fields
+    fields = file.readline().rstrip('\n').rstrip('\r').split('\t') # strings of violation data fields
     for line in file:
-        violation = line.split('\t') # list of violation values
+        violation = line.rstrip('\n').rstrip('\r').split('\t') # list of violation values
         restaurant_id = violation[id_field]
         if not "violations" in restaurants[restaurant_id]:
             restaurants[restaurant_id]["violations"] = {}
@@ -47,7 +47,7 @@ class RestaurantsWithNameAPI(Resource):
 
     def get(self, restaurant_name):
         restaurantsWithName = []
-        for key, _ in restaurants:
+        for key in restaurants:
             if restaurants[key]["BusinessName"] == restaurant_name:
                 restaurantsWithName.append(restaurants[key])
         return restaurantsWithName
@@ -55,9 +55,8 @@ class RestaurantsWithNameAPI(Resource):
 class RestaurantsWithZipAPI(Resource):
 
     def get(self, restaurant_zip):
-        print restaurant_zip
         restaurantsWithZip = []
-        for key, _ in restaurants:
+        for key in restaurants:
             if restaurants[key]["ZIP"] == restaurant_zip:
                 restaurantsWithZip.append(restaurants[key])
         return restaurantsWithZip
@@ -85,10 +84,10 @@ class ViolationsWithIdAPI(Resource):
 
 api.add_resource(AllRestaurantsAPI, '/api/v1.0/restaurants')
 api.add_resource(RestaurantsWithNameAPI, '/api/v1.0/restaurants/name/<restaurant_name>')
-api.add_resource(RestaurantsWithZipAPI, '/api/v1.0/restaurants/zip/<resaurant_zip>')
+api.add_resource(RestaurantsWithZipAPI, '/api/v1.0/restaurants/zip/<restaurant_zip>')
 api.add_resource(RestaurantsWithIdAPI, '/api/v1.0/restaurants/id/<restaurant_id>')
 api.add_resource(ViolationsAPI, '/api/v1.0/restaurants/id/<restaurant_id>/violations')
 api.add_resource(ViolationsWithIdAPI, '/api/v1.0/restaurants/id/<restaurant_id>/violations/id/<violation_id>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
