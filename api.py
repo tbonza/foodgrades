@@ -1,7 +1,5 @@
 from flask import Flask
-from flask.ext.restful import abort, Api, Resource
-
-print __name__
+from flask.ext.restful import abort, reqparse, Api, Resource
 
 app = Flask(__name__)
 api = Api(app)
@@ -57,6 +55,7 @@ class RestaurantsWithNameAPI(Resource):
 class RestaurantsWithZipAPI(Resource):
 
     def get(self, restaurant_zip):
+        print restaurant_zip
         restaurantsWithZip = []
         for key, _ in restaurants:
             if restaurants[key]["ZIP"] == restaurant_zip:
@@ -67,21 +66,29 @@ class RestaurantsWithIdAPI(Resource):
 
     def get(self, restaurant_id):
         if restaurant_id not in restaurants:
-            abort(404, message="Restaurant {}, doesn't exist".format(restaurant_id))
+            abort(404, message="Restaurant {} doesn't exist".format(restaurant_id))
         return restaurants[restaurant_id]
 
 class ViolationsAPI(Resource):
 
+    def get(self, restaurant_id):
+        if restaurant_id not in restaurants:
+            abort(404, message="Restaurant {} doesn't exist".format(restaurant_id))
+        return restaurants[restaurant_id]["violations"]
+
+class ViolationsWithIdAPI(Resource):
+
     def get(self, restaurant_id, violation_id):
         if violation_id not in restaurants[restaurant_id]["violations"]:
-            abort(404, message="Resturant {}, Violation {}, doesn't exist".format(restaurant_id, violation_id))    
+            abort(404, message="Resturant {}, Violation {} doesn't exist".format(restaurant_id, violation_id))    
         return restaurants[restaurant_id]["violations"][violation_id]
 
 api.add_resource(AllRestaurantsAPI, '/api/v1.0/restaurants')
-api.add_resource(RestaurantsWithNameAPI, '/api/v1.0/restaurants/<restaurant_name>')
-api.add_resource(RestaurantsWithZipAPI, '/api/v1.0/restaurants/<restaurant_zip>')
-api.add_resource(RestaurantsWithIdAPI, '/api/v1.0/restaurants/<restaurant_id>')
-api.add_resource(ViolationsAPI, '/api/v1.0/restaurants/<restaurant_id>/violations/<violation_id>')
+api.add_resource(RestaurantsWithNameAPI, '/api/v1.0/restaurants/name/<restaurant_name>')
+api.add_resource(RestaurantsWithZipAPI, '/api/v1.0/restaurants/zip/<resaurant_zip>')
+api.add_resource(RestaurantsWithIdAPI, '/api/v1.0/restaurants/id/<restaurant_id>')
+api.add_resource(ViolationsAPI, '/api/v1.0/restaurants/id/<restaurant_id>/violations')
+api.add_resource(ViolationsWithIdAPI, '/api/v1.0/restaurants/id/<restaurant_id>/violations/id/<violation_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
