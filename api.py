@@ -1,6 +1,8 @@
 from flask import Flask
 from flask.ext.restful import abort, Api, Resource
 
+print __name__
+
 app = Flask(__name__)
 api = Api(app)
 
@@ -43,7 +45,25 @@ class AllRestaurantsAPI(Resource):
             abort(404, message="No Restaurants")
         return restaurants
 
-class RestaurantsAPI(Resource):
+class RestaurantsWithNameAPI(Resource):
+
+    def get(self, restaurant_name):
+        restaurantsWithName = []
+        for key, _ in restaurants:
+            if restaurants[key]["BusinessName"] == restaurant_name:
+                restaurantsWithName.append(restaurants[key])
+        return restaurantsWithName
+
+class RestaurantsWithZipAPI(Resource):
+
+    def get(self, restaurant_zip):
+        restaurantsWithZip = []
+        for key, _ in restaurants:
+            if restaurants[key]["ZIP"] == restaurant_zip:
+                restaurantsWithZip.append(restaurants[key])
+        return restaurantsWithZip
+
+class RestaurantsWithIdAPI(Resource):
 
     def get(self, restaurant_id):
         if restaurant_id not in restaurants:
@@ -58,7 +78,9 @@ class ViolationsAPI(Resource):
         return restaurants[restaurant_id]["violations"][violation_id]
 
 api.add_resource(AllRestaurantsAPI, '/api/v1.0/restaurants')
-api.add_resource(RestaurantsAPI, '/api/v1.0/restaurants/<restaurant_id>')
+api.add_resource(RestaurantsWithNameAPI, '/api/v1.0/restaurants/<restaurant_name>')
+api.add_resource(RestaurantsWithZipAPI, '/api/v1.0/restaurants/<restaurant_zip>')
+api.add_resource(RestaurantsWithIdAPI, '/api/v1.0/restaurants/<restaurant_id>')
 api.add_resource(ViolationsAPI, '/api/v1.0/restaurants/<restaurant_id>/violations/<violation_id>')
 
 if __name__ == '__main__':
