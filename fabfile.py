@@ -20,8 +20,10 @@ remote_nginx_dir = '/etc/nginx/sites-enabled'
 remote_supervisor_dir = '/etc/supervisor/conf.d'
 
 env.hosts = ['104.236.242.57']  # replace with IP address or hostname
+
+# configure user without using fab file 
 env.user = 'newuser'
-env.password = 'dancer1'
+#env.password = ''
 
 
 #############
