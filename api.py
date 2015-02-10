@@ -11,7 +11,7 @@ api = Api(app)
 id_field = 1 # id is in 2nd column of restaurant data
 restaurants = {} # dict of restaurants ("id" -> dict of restaurant data)
 
-with open('grades.txt') as file:
+with open('data/grades.txt') as file:
     fields = file.readline().rstrip('\n').rstrip('\r').split('\t') # strings of restaurant data fields 
     for line in file:
         restaurant = line.rstrip('\n').rstrip('\r').split('\t') # list of restaurant values
@@ -24,7 +24,7 @@ file.close()
 
 id_field = 0 # id is in the 1st column of the violations data
 
-with open('violations.txt') as file:
+with open('data/violations.txt') as file:
     fields = file.readline().rstrip('\n').rstrip('\r').split('\t') # strings of violation data fields
     for line in file:
         violation = line.rstrip('\n').rstrip('\r').split('\t') # list of violation values
