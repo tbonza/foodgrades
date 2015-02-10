@@ -18,7 +18,7 @@ $ curl http://104.236.242.57/api/v1.0/restaurants/id/1
 
 Usage:
 
-Get all restaurants at "[host]/api/v1.0/restaurants”
+Get all restaurants at ```[host]/api/v1.0/restaurants```
 
 Get restaurants with name at "[host]/api/v1.0/restaurants/name/[name]”
 
