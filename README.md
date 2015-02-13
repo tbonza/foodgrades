@@ -10,12 +10,6 @@ $ python flask_project/app.py
 $ curl http://localhost:5000/api/v1.0/restaurants/id/4/violations/id/1
 ```
 
-not local:
-
-```bash
-$ curl http://104.236.242.57/api/v1.0/restaurants/id/1
-```
-
 Usage:
 
 Get all restaurants at ```[host]/api/v1.0/restaurants```
