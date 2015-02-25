@@ -1,8 +1,11 @@
 from flask import Flask
+from flask_cors import CORS
 from flask.ext.restful import abort, reqparse, Api, Resource
 
-app = Flask(__name__)
+app = Flask(__name__) 
+cors = CORS(app)
 api = Api(app)
+
 
 # Read in restaurant info
 
@@ -37,7 +40,7 @@ with open('data/violations.txt') as file:
 file.close()
 
 class AllRestaurantsAPI(Resource):
-
+    
     def get(self):
         if not restaurants:
             abort(404, message="No Restaurants")
