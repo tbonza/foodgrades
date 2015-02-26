@@ -23,7 +23,7 @@ env.hosts = ['104.236.242.57']  # replace with IP address or hostname
 
 # configure user without using fab file 
 env.user = 'newuser'
-#env.password = ''
+env.password = 'dancer1'
 
 
 #############
