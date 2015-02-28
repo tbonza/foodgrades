@@ -91,12 +91,12 @@ class ViolationsWithIdAPI(Resource):
             abort(404, message="Resturant {}, Violation {} doesn't exist".format(restaurant_id, violation_id))    
         return restaurants[restaurant_id]["violations"][violation_id]
 
-api.add_resource(AllRestaurantsAPI, '/api/v1.0/restaurants')
+#api.add_resource(AllRestaurantsAPI, '/api/v1.0/restaurants')
 api.add_resource(RestaurantsWithNameAPI, '/api/v1.0/restaurants/name/<restaurant_name>')
-api.add_resource(RestaurantsWithZipAPI, '/api/v1.0/restaurants/zip/<restaurant_zip>')
-api.add_resource(RestaurantsWithIdAPI, '/api/v1.0/restaurants/id/<restaurant_id>')
-api.add_resource(ViolationsAPI, '/api/v1.0/restaurants/id/<restaurant_id>/violations')
-api.add_resource(ViolationsWithIdAPI, '/api/v1.0/restaurants/id/<restaurant_id>/violations/id/<violation_id>')
+#api.add_resource(RestaurantsWithZipAPI, '/api/v1.0/restaurants/zip/<restaurant_zip>')
+#api.add_resource(RestaurantsWithIdAPI, '/api/v1.0/restaurants/id/<restaurant_id>')
+#api.add_resource(ViolationsAPI, '/api/v1.0/restaurants/id/<restaurant_id>/violations')
+#api.add_resource(ViolationsWithIdAPI, '/api/v1.0/restaurants/id/<restaurant_id>/violations/id/<violation_id>')
 
 if __name__ == '__main__':
     app.run()
