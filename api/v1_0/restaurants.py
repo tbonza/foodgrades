@@ -1,4 +1,4 @@
-from ..decorators import json, bad_json
+from ..decorators import json
 from ..models import model_v1
 from . import api
 from flask import abort
@@ -26,30 +26,28 @@ def get_restaurant_name(restaurant_name):
                  in restaurants[key]["BusinessName"].lower()]
     return json.dumps(result)
 
-
-
-@api.route('/hmm/<articleid>', methods=['GET'])
-@json
-def get_hmm(articleid):
+@api.route('/restaurants/zip/<restaurant_zip>', methods=['GET'])
+def get_restaurants_zip(restaurant_zip):
+    """ Search for restaurant using zip code """
+    import json
     restaurants = model_v1()
-    namefound = {}
-    for key in restaurants:
-        if articleid.lower() in restaurants[key]['BusinessName'].lower():
-            namefound[restaurants[key]['BusinessName']] \
-                = restaurants[key]
-    return namefound
 
-    
-    return {'you are reading ' + articleid: 'true'}
-    
+    if not restaurants:
+        abort(404)
+    else:
+        results = [restaurants[key]
+                   for key in restaurants
+                   if restaurant_zip == restaurants[key]["ZIP"]]
+    return json.dumps(results)
 
-@api.route('/names/', methods=['GET'])
+@api.route('/restaurants/id/<restaurant_id>', methods=['GET'])
 @json
-def get_names():
-    return {'names': 'hello world'}
+def get_restaurants_id(restaurant_id):
 
-@api.route('/test/', methods=['GET'])
-@json
-def get_missing():
-    
-    return abort(404)
+    restaurants = model_v1()
+
+    if not restaurants:
+        abort(404)
+    if restaurant_id not in restaurants:
+        abort(404)
+    return restaurants[restaurant_id]
