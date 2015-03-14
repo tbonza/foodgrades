@@ -1,9 +1,9 @@
 from ..decorators import json
 from ..models import model_v1
-from . import api
+from . import api_1_0
 from flask import abort
 
-@api.route('/restaurants/', methods=['GET'])
+@api_1_0.route('/restaurants/', methods=['GET'])
 @json
 def get_all_restaurants():
     restaurants = model_v1()
@@ -11,7 +11,7 @@ def get_all_restaurants():
         abort(404)
     return restaurants
 
-@api.route('/restaurants/name/<restaurant_name>', methods=['GET'])
+@api_1_0.route('/restaurants/name/<restaurant_name>', methods=['GET'])
 def get_restaurant_name(restaurant_name):
     """ http://stackoverflow.com/questions/12435297 """
     import json
@@ -26,7 +26,7 @@ def get_restaurant_name(restaurant_name):
                  in restaurants[key]["BusinessName"].lower()]
     return json.dumps(result)
 
-@api.route('/restaurants/zip/<restaurant_zip>', methods=['GET'])
+@api_1_0.route('/restaurants/zip/<restaurant_zip>', methods=['GET'])
 def get_restaurants_zip(restaurant_zip):
     """ Search for restaurant using zip code """
     import json
@@ -40,7 +40,7 @@ def get_restaurants_zip(restaurant_zip):
                    if restaurant_zip == restaurants[key]["ZIP"]]
     return json.dumps(results)
 
-@api.route('/restaurants/id/<restaurant_id>', methods=['GET'])
+@api_1_0.route('/restaurants/id/<restaurant_id>', methods=['GET'])
 @json
 def get_restaurants_id(restaurant_id):
 
